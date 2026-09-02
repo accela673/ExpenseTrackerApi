@@ -18,7 +18,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 var app = builder.Build();
 
