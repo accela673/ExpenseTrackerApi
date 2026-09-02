@@ -35,21 +35,16 @@ namespace ExpenseTrackerApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CategoryDto>> Create(CreateCategoryDto dto)
+        [HttpPost]
+        public async Task<ActionResult<CategoryDto>> Create(
+    CreateCategoryDto dto)
         {
-            try
-            {
-                var category = await _service.CreateAsync(dto);
+            var category = await _service.CreateAsync(dto);
 
-                return CreatedAtAction(
-                    nameof(GetById),
-                    new { id = category.Id },
-                    category);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return Conflict(new { message = ex.Message });
-            }
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = category.Id },
+                category);
         }
 
         [HttpPut("{id}")]
@@ -57,37 +52,23 @@ namespace ExpenseTrackerApi.Controllers
     int id,
     CreateCategoryDto dto)
         {
-            try
-            {
-                var updated = await _service.UpdateAsync(id, dto);
+            var updated = await _service.UpdateAsync(id, dto);
 
-                if (!updated)
-                    return NotFound();
+            if (!updated)
+                return NotFound();
 
-                return NoContent();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return Conflict(new { message = ex.Message });
-            }
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                var deleted = await _service.DeleteAsync(id);
+            var deleted = await _service.DeleteAsync(id);
 
-                if (!deleted)
-                    return NotFound();
+            if (!deleted)
+                return NotFound();
 
-                return NoContent();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return Conflict(new { message = ex.Message });
-            }
+            return NoContent();
         }
     }
 }

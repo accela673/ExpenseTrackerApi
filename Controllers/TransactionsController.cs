@@ -44,19 +44,12 @@ namespace ExpenseTrackerApi.Controllers
         public async Task<ActionResult<TransactionDto>> Create(
             CreateTransactionDto dto)
         {
-            try
-            {
-                var transaction = await _service.CreateAsync(dto);
+            var transaction = await _service.CreateAsync(dto);
 
-                return CreatedAtAction(
-                    nameof(GetById),
-                    new { id = transaction.Id },
-                    transaction);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return Conflict(new { message = ex.Message });
-            }
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = transaction.Id },
+                transaction);
         }
 
         [HttpPut("{id}")]
@@ -64,19 +57,12 @@ namespace ExpenseTrackerApi.Controllers
             int id,
             CreateTransactionDto dto)
         {
-            try
-            {
-                var updated = await _service.UpdateAsync(id, dto);
+            var updated = await _service.UpdateAsync(id, dto);
 
-                if (!updated)
-                    return NotFound();
+            if (!updated)
+                return NotFound();
 
-                return NoContent();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return Conflict(new { message = ex.Message });
-            }
+            return NoContent();
         }
 
         [HttpDelete("{id}")]

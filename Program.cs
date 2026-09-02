@@ -1,4 +1,5 @@
 using ExpenseTrackerApi.Data;
+using ExpenseTrackerApi.Exceptions;
 using ExpenseTrackerApi.Repositories;
 using ExpenseTrackerApi.Services;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,12 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 var app = builder.Build();
+
+app.UseExceptionHandler();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
