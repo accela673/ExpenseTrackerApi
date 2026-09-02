@@ -23,6 +23,7 @@ public class CategoryRepository : ICategoryRepository
     public async Task<Category?> GetByIdAsync(int id)
     {
         return await _context.Categories
+            .Include(c => c.Transactions)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 
